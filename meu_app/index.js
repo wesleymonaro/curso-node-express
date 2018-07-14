@@ -10,7 +10,7 @@ function myMiddleware(req, res, next) {
 }
 
 app.set('port', 3000);
-app.set('view engine', 'ejs');
+app.set('view engine', 'pug');
 app.set('views', './views');
 
 app.use(bodyParser.json());
