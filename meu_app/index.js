@@ -4,8 +4,14 @@ var bodyParser = require('body-parser');
 var app = express();
 const PORT = 3000;
 
+function myMiddleware(req, res, next){
+    req.body.message = "Intercepted by middleware";
+    next();
+}
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(myMiddleware);
 
 app.get('/', (req, res) => {
     res.send('Hello World');
