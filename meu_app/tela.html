@@ -1,0 +1,27 @@
+<style>
+    #myDiv {
+        position: absolute;
+        left: 0;
+        ;
+        top: 0;
+        width: 50px;
+        height: 50px;
+        background-color: red
+    }
+</style>
+
+<div id="myDiv"></div>
+<script src="http://cdn.socket.io/socket.io-1.7.3.js"></script>
+
+<script>
+    var myDiv = document.getElementById('myDiv');
+
+    function setPosition(positions) {
+        myDiv.style.left = `${positions.x}px`;
+        myDiv.style.top = `${positions.y}px`;
+    }
+
+    var socket = io();
+
+    socket.on('setPosition', setPosition);
+</script>

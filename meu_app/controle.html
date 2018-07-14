@@ -1,0 +1,29 @@
+<script src="http://cdn.socket.io/socket.io-1.7.3.js"></script>
+
+<script>
+    var socket = io(),
+        x = 0,
+        y = 0,
+        left = 37,
+        right = 39,
+        up = 38,
+        down = 40;
+
+    function setPosition() {
+        socket.emit('sendPosition', { x, y })
+    }
+
+    window.addEventListener('keydown', (event) => {
+        var keyCode = event.keyCode;
+
+        switch (keyCode) {
+            case up: y -= 10; break;
+            case left: x -= 10; break;
+            case down: y += 10; break;
+            case right: x += 10; break;
+        }
+
+        setPosition();
+    })
+
+</script>
