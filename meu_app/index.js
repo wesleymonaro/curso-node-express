@@ -3,12 +3,15 @@ var bodyParser = require('body-parser');
 var namespace = require('express-namespace');
 
 var app = express();
-const PORT = 3000;
 
 function myMiddleware(req, res, next) {
     req.body.message = "Intercepted by middleware";
     next();
 }
+
+app.set('port', 3000);
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,15 +20,21 @@ app.use(myMiddleware);
 app.get('/', (req, res) => { res.send('Hello World'); })
 
 //USANDO NAMESPACES
-app.namespace('/alunos', () => {
-    app.get('/', () => { })
-    app.get('/:id', () => { })
-    app.post('/create', () => { })
-    app.put('/update/:id', () => { })
-})
+// app.namespace('/alunos', () => {
+//     app.get('/', () => { })
+//     app.get('/:id', () => { })
+//     app.post('/create', () => { })
+//     app.put('/update/:id', () => { })
+// })
 
-app.get('/aluno/:id', (req, res) => {
-    res.send('Aluno ' + req.params.id);
+app.get('/alunos', (req, res) => {
+    var alunos = [
+        { nome: 'Wesley' },
+        { nome: 'Sheila' },
+        { nome: 'Andrey' },
+    ]
+
+    res.render('alunos', { titulo: 'TreinaWeb', alunos })
 })
 
 // USANDO REGEX
@@ -52,5 +61,5 @@ app.post('/teste', (req, res) => {
     })
 });
 
-app.listen(PORT);
-console.log(`Server running on port ${PORT}`)
+app.listen(app.get('port'));
+console.log(`Server running on port ${app.get('port')}`)
